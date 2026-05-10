@@ -4,15 +4,17 @@ on:
   push:
     branches:
       - main
-      
   pull_request:
     branches:
       - main
-      
 
 jobs:
   build-test-format:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: Cat_Cafe
 
     steps:
       - name: Checkout repository
