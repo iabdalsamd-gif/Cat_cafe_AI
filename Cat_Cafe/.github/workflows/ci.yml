@@ -1,0 +1,38 @@
+name: Cat Cafe CI
+
+on:
+  push:
+    branches:
+      - main
+      
+  pull_request:
+    branches:
+      - main
+      
+
+jobs:
+  build-test-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 25
+          cache: gradle
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Build project
+        run: ./gradlew classes
+
+      - name: Run JUnit tests
+        run: ./gradlew test
+
+      - name: Check formatting
+        run: ./gradlew spotlessCheck
